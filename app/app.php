@@ -53,7 +53,8 @@
     });
 
     $app->get("/restaurants", function() use ($app){
-        return $app['twig']->render('restaurants.html.twig');
+        $generic_cuisine = new Cuisine('All');
+        return $app['twig']->render('restaurants.html.twig', array('restaurants' => Restaurant::getAll(), 'cuisine' => $generic_cuisine));
     });
 
     $app->post("/restaurants", function() use ($app) {
@@ -69,6 +70,11 @@
         $restaurants = $cuisine->getRestaurants();
         return $app['twig']->render('restaurants.html.twig', array('cuisine' => $cuisine, 'restaurants' => $restaurants, 'cuisines' => Cuisine::getAll()));
     });
+
+    // $app-get("/restaurants/{id}", function($id) use ($app) {
+    //     $restaurant = Restaurant::find($id);
+    //
+    // });
 
     return $app;
 ?>
