@@ -6,6 +6,7 @@
     */
 
     require_once "src/Cuisine.php";
+    require_once "src/Restaurant.php";
 
     $server = 'mysql:host=localhost;dbname=restaurant_test';
     $username = 'root';
@@ -17,6 +18,7 @@
         protected function tearDown()
         {
             Cuisine::deleteAll();
+            Restaurant::deleteAll();
         }
 
         function test_getName()
@@ -106,6 +108,67 @@
             $result = Cuisine::getAll();
             //Assert
             $this->assertEquals([$test_Cuisine, $test_Cuisine2], $result);
+        }
+
+        function test_find()
+        {
+            //Arrange
+            $name = "Thai";
+            $name2 = "Italian";
+            $test_Cuisine = new Cuisine($name);
+            $test_Cuisine->save();
+            $test_Cuisine2 = new Cuisine($name2);
+            $test_Cuisine2->save();
+
+            //Act
+            $result = Cuisine::find($test_Cuisine->getId());
+
+            //Assert
+            $this->assertEquals($test_Cuisine, $result);
+        }
+
+        function test_getRestaurants()
+        {
+            //Arrange
+
+            $name = "Thai";
+            $name2 = "Italian";
+            $test_Cuisine = new Cuisine($name);
+            $test_Cuisine->save();
+            $test_Cuisine2 = new Cuisine($name2);
+            $test_Cuisine2->save();
+
+            $id = null;
+            $name = 'Ham Salad';
+            $cuisine_id = $test_Cuisine->getId();
+            $description = 'Ham Shot First';
+            $address = '1313 Mockingbird Lane, Portland, Oregon 97210';
+            $phone = '503-666-1212';
+            $test_Restaurant = new Restaurant($id, $name, $cuisine_id, $description, $address, $phone);
+            $test_Restaurant->save();
+
+            $id = null;
+            $name = 'Ham Salad2';
+            $cuisine_id = $test_Cuisine->getId();
+            $description = 'Ham Shot Second';
+            $address = '1414 Mockingbird Lane, Portland, Oregon 97210';
+            $phone = '503-666-1313';
+            $test_Restaurant1 = new Restaurant($id, $name, $cuisine_id, $description, $address, $phone);
+            $test_Restaurant1->save();
+
+            $id = null;
+            $name = 'Pizza the Hutt';
+            $cuisine_id = $test_Cuisine2->getId();
+            $description = 'Let the Wookee Eat';
+            $address = '1315 Mockingbird Lane, Portland, Oregon 97210';
+            $phone = '503-666-1213';
+            $test_Restaurant2 = new Restaurant($id, $name, $cuisine_id, $description, $address, $phone);
+            $test_Restaurant2->save();
+
+            //Act
+            $result = $test_Cuisine->getRestaurants();
+            //Assert
+            $this->assertEquals($result, array($test_Restaurant, $test_Restaurant1));
         }
     }
 ?>

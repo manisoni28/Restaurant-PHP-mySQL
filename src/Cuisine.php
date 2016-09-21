@@ -38,10 +38,10 @@
                 $id = $restaurant['id'];
                 $cuisine_id = $restaurant['cuisine_id'];
                 $name = $restaurant['name'];
-                $breed = $restaurant['breed'];
-                $gender = $restaurant['gender'];
-                $date_admitted = $restaurant['date_admitted'];
-                $new_restaurant = new Restaurant($id, $cuisine_id, $name, $breed, $gender, $date_admitted);
+                $description = $restaurant['description'];
+                $address = $restaurant['address'];
+                $phone = $restaurant['phone'];
+                $new_restaurant = new Restaurant($id, $name, $cuisine_id, $description, $address, $phone);
                 array_push($restaurants, $new_restaurant);
             }
             return $restaurants;
@@ -72,7 +72,7 @@
             }
             return $cuisines;
         }
-        
+
         static function deleteAll()
         {
           $GLOBALS['DB']->exec("DELETE FROM cuisines;");
@@ -88,5 +88,7 @@
         {
             $GLOBALS['DB']->exec("DELETE FROM cuisines WHERE id = {$this->getId()};");
         }
+
+
     }
 ?>
