@@ -23,11 +23,13 @@
         {
             return $this->id;
         }
+
         function save()
         {
             $GLOBALS['DB']->exec("INSERT INTO cuisines (name) VALUES ('{$this->getName()}')");
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
+
         function getRestaurants()
         {
             $restaurants = Array();
@@ -44,6 +46,7 @@
             }
             return $restaurants;
         }
+
         static function find($search_id)
         {
             $found_cuisine = null;
@@ -56,6 +59,7 @@
             }
             return $found_cuisine;
         }
+
         static function getAll()
         {
             $returned_cuisine = $GLOBALS['DB']->query("SELECT * FROM cuisines;");
@@ -68,6 +72,7 @@
             }
             return $cuisines;
         }
+        
         static function deleteAll()
         {
           $GLOBALS['DB']->exec("DELETE FROM cuisines;");
