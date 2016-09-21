@@ -71,10 +71,17 @@
         return $app['twig']->render('restaurants.html.twig', array('cuisine' => $cuisine, 'restaurants' => $restaurants, 'cuisines' => Cuisine::getAll()));
     });
 
-    // $app-get("/restaurants/{id}", function($id) use ($app) {
-    //     $restaurant = Restaurant::find($id);
-    //
-    // });
+    $app->get("/restaurants/{id}", function($id) use ($app) {
+        $restaurant = Restaurant::find($id);
+        return $app['twig']->render('restaurant_detail.html.twig', array('restaurant' => $restaurant));
+    });
+
+    $app->delete("/restaurants/{id}", function($id) use ($app) {
+        $restaurant = Restaurant::find($id);
+        $restaurant->delete();
+        $generic_cuisine = new Cuisine('All');
+        return $app['twig']->render('restaurants.html.twig', array('restaurants' => Restaurant::getAll(), 'cuisine' => $generic_cuisine));
+    });
 
     return $app;
 ?>

@@ -109,7 +109,7 @@
             $found_restaurant = null;
             $restaurants = Restaurant::getAll();
             foreach($restaurants as $restaurant) {
-                $restaurant_id = $restaurant->getId();
+                $restaurant_id = $restaurant->getRestaurantProperty('id');
                 if ($restaurant_id == $search_id) {
                   $found_restaurant = $restaurant;
                 }
