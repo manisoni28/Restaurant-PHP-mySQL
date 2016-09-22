@@ -94,10 +94,6 @@
             foreach($returned_restaurants as $restaurant) {
                 $id = $restaurant['id'];
                 $restaurant_id = $restaurant['restaurant_id'];
-                $name = $restaurant['name'];
-                $breed = $restaurant['breed'];
-                $gender = $restaurant['gender'];
-                $date_admitted = $restaurant['date_admitted'];
                 $new_restaurant = new Restaurant($id, $restaurant_id, $name, $breed, $gender, $date_admitted);
                 array_push($restaurants, $new_restaurant);
             }
