@@ -27,6 +27,16 @@
                         <input name="_method" type="hidden" value="delete">
                         <button type="submit" class="btn btn-danger">Delete This</button>
                     </form>
+                    <br />
+                    {% if reviews is not empty %}
+                        {% for review in reviews %}
+                            <h4>{{review.getReviewProperty('review')}}</h4>
+                        {% endfor %}
+                    {% endif %}
+                    <form class="form-group" action="/restaurants/{{restaurant.getRestaurantProperty('id')}}/new_review" method="post">
+                        <input class="form-control" type="text" name="review" placeholder="Write a quick review">
+                        <button type="submit" class="btn btn-info">Add My Review!</button>
+                    </form>
                 </div>
                 <div class="col-md-4"></div>
             </div>

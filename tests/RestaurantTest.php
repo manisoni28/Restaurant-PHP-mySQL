@@ -6,6 +6,7 @@
     */
 
     require_once 'src/Restaurant.php';
+    require_once 'src/Review.php';
 
     $server = 'mysql:host=localhost;dbname=restaurant_test';
     $username = 'root';
@@ -298,6 +299,31 @@
         $this->assertEquals([$test_Restaurant, $test_Restaurant2], $result);
     }
 
+    function test_findReviews()
+    {
+        $id = null;
+        $name = 'Ham Salad';
+        $cuisine_id = 1;
+        $description = 'Ham Shot First';
+        $address = '1313 Mockingbird Lane, Portland, Oregon 97210';
+        $phone = '503-666-1212';
+        $test_Restaurant = new Restaurant($id, $name, $cuisine_id, $description, $address, $phone);
+        $test_Restaurant->save();
+
+        $restaurant_id = $test_Restaurant->getRestaurantProperty('id');
+        $review = "this place sucks";
+        $new_review = new Review($id, $restaurant_id, $review);
+        $new_review->save();
+        $review2 = "this place rocks";
+        $new_review2 = new Review($id, $restaurant_id, $review2);
+        $new_review2->save();
+
+        //Act
+        $result = $test_Restaurant->findReviews();
+
+        //Assert
+        $this->assertEquals([$new_review, $new_review2], $result);
+    }
 
     }
 ?>

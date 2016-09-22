@@ -3,6 +3,7 @@
     require_once __DIR__."/../vendor/autoload.php";
     require_once __DIR__."/../src/Cuisine.php";
     require_once __DIR__."/../src/Restaurant.php";
+    require_once __DIR__."/../src/Review.php";
 
     $app = new Silex\Application();
 
@@ -73,7 +74,7 @@
 
     $app->get("/restaurants/{id}", function($id) use ($app) {
         $restaurant = Restaurant::find($id);
-        return $app['twig']->render('restaurant_detail.html.twig', array('restaurant' => $restaurant));
+        return $app['twig']->render('restaurant_detail.html.twig', array('restaurant' => $restaurant, 'reviews' => $restaurant->findReviews()));
     });
 
     $app->delete("/restaurants/{id}", function($id) use ($app) {
@@ -81,6 +82,15 @@
         $restaurant->delete();
         $generic_cuisine = new Cuisine('All');
         return $app['twig']->render('restaurants.html.twig', array('restaurants' => Restaurant::getAll(), 'cuisine' => $generic_cuisine));
+    });
+
+    $app->post("/restaurants/{id}/new_review", function($id) use ($app) {
+        $restaurant_id = $id;
+        $review = $_POST['review'];
+        $new_review = new Review(null, $restaurant_id, $review);
+        $new_review->save();
+        $restaurant = Restaurant::find($id);
+        return $app['twig']->render('restaurant_detail.html.twig', array('restaurant' => $restaurant, 'reviews' => $restaurant->findReviews()));
     });
 
     return $app;

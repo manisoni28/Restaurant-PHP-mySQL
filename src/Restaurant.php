@@ -130,6 +130,19 @@
             return $restaurants;
         }
 
+        function findReviews()
+        {
+            $found_reviews = array();
+            $reviews = Review::getAll();
+            foreach ($reviews as $review) {
+                $restaurant_id = $review->getReviewProperty('restaurant_id');
+                if ($restaurant_id == $this->getRestaurantProperty('id')) {
+                    array_push($found_reviews, $review);
+                }
+            }
+            return $found_reviews;
+        }
+
         static function deleteAll()
         {
           $GLOBALS['DB']->exec("DELETE FROM restaurants;");
