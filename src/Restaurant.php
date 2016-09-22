@@ -148,5 +148,18 @@
           $GLOBALS['DB']->exec("DELETE FROM restaurants;");
         }
 
+        static function search($search_term)
+        {
+            $query = "/" . $search_term . "/i";
+            $found_restaurants = array();
+            $restaurants = Restaurant::getAll();
+            foreach ($restaurants as $restaurant) {
+                if (preg_match($query, $restaurant->getRestaurantProperty('name'))) {
+                    array_push($found_restaurants, $restaurant);
+                }
+            }
+            return $found_restaurants;
+        }
+
     }
 ?>

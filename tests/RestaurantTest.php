@@ -325,5 +325,34 @@
         $this->assertEquals([$new_review, $new_review2], $result);
     }
 
+    function test_search()
+    {
+        //Arrange
+        $id = null;
+        $name = 'Ham Salad';
+        $cuisine_id = 1;
+        $description = 'Ham Shot First';
+        $address = '1313 Mockingbird Lane, Portland, Oregon 97210';
+        $phone = '503-666-1212';
+        $test_Restaurant = new Restaurant($id, $name, $cuisine_id, $description, $address, $phone);
+        $test_Restaurant->save();
+
+        $id = null;
+        $name = 'Pizza the Hutt';
+        $cuisine_id = 2;
+        $description = 'Let the Wookee Eat';
+        $address = '1315 Mockingbird Lane, Portland, Oregon 97210';
+        $phone = '503-666-1213';
+        $test_Restaurant2 = new Restaurant($id, $name, $cuisine_id, $description, $address, $phone);
+        $test_Restaurant2->save();
+
+        //Act
+        $result = Restaurant::search(' th');
+
+        //Assert
+        $this->assertEquals([$test_Restaurant2], $result);
+    }
+
+
     }
 ?>

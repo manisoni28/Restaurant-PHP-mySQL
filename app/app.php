@@ -93,5 +93,15 @@
         return $app['twig']->render('restaurant_detail.html.twig', array('restaurant' => $restaurant, 'reviews' => $restaurant->findReviews()));
     });
 
+    $app->get("/restaurant_new", function() use ($app) {
+        return $app['twig']->render('restaurant_new.html.twig', array('cuisines' => Cuisine::getAll()));
+    });
+
+    $app->post("/search", function() use ($app) {
+        $generic_cuisine = new Cuisine('All');
+        return $app['twig']->render('restaurants.html.twig', array('restaurants' => Restaurant::search($_POST['search_term']), 'cuisine' => $generic_cuisine));
+    });
+
+
     return $app;
 ?>
