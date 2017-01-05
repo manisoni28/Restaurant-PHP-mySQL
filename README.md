@@ -40,8 +40,9 @@ Contact the creator, Matthew Brandenburg, at matt.bran87@gmail.com.
     ### show list of all restaurants for a single cuisines
         * input: Thai
         * output: Taste of Thai, Thunder Thai, Thai Me Up
-    ## Known Bugs
-
+    
+## Known Bugs
+ 
 _None yet_
 
 ## Technologies Used
